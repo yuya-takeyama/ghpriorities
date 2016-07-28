@@ -15,32 +15,11 @@ ActiveRecord::Schema.define(version: 20160728162427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "access_tokens", force: :cascade do |t|
-    t.integer  "user_id"
-    t.text     "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_access_tokens_on_user_id", using: :btree
-  end
-
   create_table "dashboards", force: :cascade do |t|
     t.string   "query"
     t.text     "priorities_json"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string   "username"
-    t.string   "email",            null: false
-    t.text     "bio"
-    t.string   "avatar"
-    t.boolean  "admin"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.string   "crypted_password"
-    t.string   "salt"
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
 end
