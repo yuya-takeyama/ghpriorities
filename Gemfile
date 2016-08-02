@@ -12,6 +12,7 @@ gem 'octokit'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'test-unit-rails'
 end
 
 group :development do
