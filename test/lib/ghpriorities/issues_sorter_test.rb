@@ -1,7 +1,7 @@
 require 'ghpriorities/issues_sorter'
 
 class GHPriorities::IssuesSorterTest < Test::Unit::TestCase
-  sub_test_case '.group_and_sort' do
+  sub_test_case '.sort' do
     setup do
       @priorities = {
         '1' => 3,
@@ -17,20 +17,16 @@ class GHPriorities::IssuesSorterTest < Test::Unit::TestCase
       ]
     end
 
-    test 'group prioritized/unprioritized issues and sort them' do
-      result = GHPriorities::IssuesSorter.group_and_sort(priorities: @priorities, issues: @issues)
+    test 'sort issues' do
+      result = GHPriorities::IssuesSorter.sort(priorities: @priorities, issues: @issues)
 
-      assert_equal(result, {
-        prioritized: [
-          {id: 5, title: 'Five'},
-          {id: 2, title: 'Two'},
-          {id: 1, title: 'One'},
-        ],
-        unprioritized: [
-          {id: 4, title: 'Four'},
-          {id: 3, title: 'Three'},
-        ],
-      })
+      assert_equal([
+        {id: 5, title: 'Five'},
+        {id: 2, title: 'Two'},
+        {id: 1, title: 'One'},
+        {id: 3, title: 'Three'},
+        {id: 4, title: 'Four'},
+      ], result)
     end
   end
 end
