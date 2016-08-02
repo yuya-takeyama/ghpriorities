@@ -1,3 +1,6 @@
+require 'octokit'
+require 'ghpriorities/issues_sorter'
+
 class DashboardsController < ApplicationController
   before_action :set_dashboard, only: [:show, :edit, :update, :destroy]
 
@@ -8,6 +11,11 @@ class DashboardsController < ApplicationController
 
   # GET /dashboards/1
   def show
+    priorities = begin JSON.parse(@dashboard.priorities_json) rescue {} end
+    issues = octokit.search_issues(@dashboard.query, page: 1, per_page: 100).items.map(&:to_attrs)
+    result = GHPriorities::IssuesSorter.group_and_sort(priorities: priorities, issues: issues)
+    @prioritized_issues = result[:prioritized]
+    @unprioritized_issues = result[:unprioritized]
   end
 
   # GET /dashboards/new
@@ -54,5 +62,9 @@ class DashboardsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def dashboard_params
       params.require(:dashboard).permit(:query, :priorities_json)
+    end
+
+    def octokit
+      @octokit ||= Octokit::Client.new(access_token: ENV['GITHUB_API_TOKEN'])
     end
 end

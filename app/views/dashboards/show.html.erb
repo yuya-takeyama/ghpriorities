@@ -10,5 +10,13 @@
   <%= @dashboard.priorities_json %>
 </p>
 
+<h2>Unprioritized</h2>
+
+<%= react_component('Issues', issues: @unprioritized_issues) %>
+
+<h2>Prioritized</h2>
+
+<%= react_component('Issues', issues: @prioritized_issues) %>
+
 <%= link_to 'Edit', edit_dashboard_path(@dashboard) %> |
 <%= link_to 'Back', dashboards_path %>
