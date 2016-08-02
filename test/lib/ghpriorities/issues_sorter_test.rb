@@ -4,9 +4,9 @@ class GHPriorities::IssuesSorterTest < Test::Unit::TestCase
   sub_test_case '.group_and_sort' do
     setup do
       @priorities = {
-        1 => 3,
-        2 => 2,
-        5 => 1,
+        '1' => 3,
+        '2' => 2,
+        '5' => 1,
       }
       @issues = [
         {id: 1, title: 'One'},
