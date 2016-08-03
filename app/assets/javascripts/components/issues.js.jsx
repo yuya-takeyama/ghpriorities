@@ -1,4 +1,19 @@
 import { Component } from 'react';
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
+
+const Issue = SortableElement(({ issue }) => {
+  return (<li>{issue.title}</li>);
+});
+
+const IssuesList = SortableContainer(({ issues }) => {
+  return (
+    <ul>
+      {issues.map((issue, index) =>
+        <Issue key={`item-${ issue.id }`} index={ index } issue={ issue } />
+      )}
+    </ul>
+  );
+});
 
 export default class Issues extends Component {
   constructor(props) {
@@ -6,19 +21,13 @@ export default class Issues extends Component {
     this.state = {issues: props.issues};
   }
 
-  render() {
-    let issues = this.state.issues;
-
-    return (
-      <ul>
-        {issues.map(this.renderIssue)}
-      </ul>
-    );
+  onSortEnd({ oldIndex, newIndex }) {
+    this.setState({
+      issues: arrayMove(this.state.issues, oldIndex, newIndex),
+    })
   }
 
-  renderIssue(issue) {
-    return (
-      <li key={issue.id}>{issue.title}</li>
-    );
+  render() {
+    return (<IssuesList issues={this.state.issues} onSortEnd={this.onSortEnd.bind(this)} />);
   }
 }

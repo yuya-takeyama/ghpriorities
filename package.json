@@ -6,7 +6,8 @@
   "dependencies": {
     "babel-preset-stage-2": "^6.5.0",
     "react": "^15.0.1",
-    "react-dom": "^15.0.1"
+    "react-dom": "^15.0.1",
+    "react-sortable-hoc": "0.0.6"
   },
   "devDependencies": {
     "babel-plugin-add-module-exports": "^0.1.2",
