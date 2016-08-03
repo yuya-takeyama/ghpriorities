@@ -1,3 +1,24 @@
-// Place all the styles related to the dashboards controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.list-priorities {
+  margin: 0;
+  padding: 0;
+}
+
+.issue-container {
+  list-style-type: none;
+}
+
+.issue-title {
+  font-size: 130%;
+}
+
+.issue-state {
+  font-size: 130%;
+}
+
+.issue-state-open {
+  color: #6cc644;
+}
+
+.issue-state-closed {
+  color: #bd2c00;
+}

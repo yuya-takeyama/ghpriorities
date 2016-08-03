@@ -1,16 +1,53 @@
 import { Component } from 'react';
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 import axios from 'axios';
+import FontAwesome from 'react-fontawesome';
 
-const Issue = SortableElement(({ issue }) => {
-  return (<li>{issue.title}</li>);
+const Issue = SortableElement(({ issue, issueState }) => {
+  let style = {};
+
+  switch (issueState) {
+    case 'OPEN':
+      if (issue.state !== 'open') {
+        style.display = 'none';
+      }
+      break;
+
+    case 'CLOSED':
+      if (issue.state !== 'closed') {
+        style.display = 'none';
+      }
+      break;
+  }
+
+  return (
+    <li className='issue-container'>
+      <div style={ style }>
+        <IssueState state={ issue.state } />
+        <div className="issue-title">{issue.title}</div>
+      </div>
+    </li>
+  );
 });
 
-const IssuesList = SortableContainer(({ issues }) => {
+const IssueState = ({ state }) => {
+  if (state === 'open') {
+    return (<FontAwesome name='circle' className='issue-state issue-state-open' />);
+  } else {
+    return (<FontAwesome name='check-circle' className='issue-state issue-state-closed' />);
+  }
+};
+
+const IssuesList = SortableContainer(({ issues, issueState }) => {
   return (
-    <ul>
+    <ul className='list-priorities'>
       {issues.map((issue, index) =>
-        <Issue key={`item-${ issue.id }`} index={ index } issue={ issue } />
+        <Issue
+          key={ `item-${ issue.id }` }
+          index={ index }
+          issue={ issue }
+          issueState={ issueState }
+        />
       )}
     </ul>
   );
@@ -19,11 +56,30 @@ const IssuesList = SortableContainer(({ issues }) => {
 export default class Issues extends Component {
   constructor(props) {
     super(props);
-    this.state = {issues: props.issues};
+    this.state = {
+      issues: props.issues,
+      issueState: 'OPEN',
+    };
   }
 
   render() {
-    return (<IssuesList issues={this.state.issues} onSortEnd={this.onSortEnd.bind(this)} />);
+    return (
+      <div>
+        <div>
+          <a href="#" onClick={this.showOpen.bind(this)}>Open</a>
+          {' / '}
+          <a href="#" onClick={this.showClosed.bind(this)}>Closed</a>
+          {' / '}
+
+          <a href="#" onClick={this.showAll.bind(this)}>All</a>
+        </div>
+        <IssuesList
+          issues={this.state.issues}
+          issueState={this.state.issueState}
+          onSortEnd={this.onSortEnd.bind(this)}
+        />
+      </div>
+    );
   }
 
   onSortEnd({ oldIndex, newIndex }) {
@@ -31,7 +87,9 @@ export default class Issues extends Component {
       issues: arrayMove(this.state.issues, oldIndex, newIndex),
     });
 
-    this.sync();
+    if (oldIndex !== newIndex) {
+      this.sync();
+    }
   }
 
   sync() {
@@ -49,5 +107,20 @@ export default class Issues extends Component {
 
     axios
       .put(`/dashboards/${this.props.dashboardId}/priorities`, { dashboard: { priorities } });
+  }
+
+  showAll(event) {
+    event.preventDefault();
+    this.setState({issueState: 'ALL'});
+  }
+
+  showOpen(event) {
+    event.preventDefault();
+    this.setState({issueState: 'OPEN'});
+  }
+
+  showClosed(event) {
+    event.preventDefault();
+    this.setState({issueState: 'CLOSED'});
   }
 }

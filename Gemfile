@@ -10,6 +10,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'react-rails'
 gem 'browserify-rails'
 gem 'octokit'
+gem 'font-awesome-sass'
 
 group :development, :test do
   gem 'byebug', platform: :mri
