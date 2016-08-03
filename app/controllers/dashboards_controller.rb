@@ -68,7 +68,7 @@ class DashboardsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def dashboard_params
-      params.require(:dashboard).permit(:query, :priorities_json)
+      params.require(:dashboard).permit(:name, :query)
     end
 
     def update_priorities_params

@@ -1,16 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Query:</strong>
-  <%= @dashboard.query %>
-</p>
-
-<p>
-  <strong>Priorities json:</strong>
-  <%= @dashboard.priorities_json %>
-</p>
-
-<h2>Priority</h2>
+<h2><%= @dashboard.name %></h2>
 
 <%= react_component('Issues', issues: @issues, dashboardId: @dashboard.id) %>
 
