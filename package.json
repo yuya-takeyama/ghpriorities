@@ -6,7 +6,9 @@
   "dependencies": {
     "axios": "^0.13.1",
     "babel-preset-stage-2": "^6.5.0",
+    "counterpart": "^0.17.2",
     "react": "^15.0.1",
+    "react-ago-component": "^0.7.1",
     "react-dom": "^15.0.1",
     "react-fontawesome": "^1.1.0",
     "react-sortable-hoc": "0.0.6"
