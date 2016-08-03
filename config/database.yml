@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  database: phpriorities
+  database: ghpriorities
 
 test:
   <<: *default
-  database: phpriorities_test
+  database: ghpriorities_test
 
 production:
   <<: *default
