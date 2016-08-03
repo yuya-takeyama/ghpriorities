@@ -36,6 +36,14 @@ const IssueState = ({ state }) => {
   }
 };
 
+const appendQuery = (url, query) => {
+  if (url.indexOf('?') === -1) {
+    return `${url}?${query}`;
+  } else {
+    return `${url}&${query}`;
+  }
+};
+
 const IssueMisc = ({ issue }) => {
   return (
     <div className="issue-misc">
@@ -43,7 +51,7 @@ const IssueMisc = ({ issue }) => {
       {' '}
       opened <Ago date={issue.created_at} />
       {' '}
-      by <img src={issue.user.avatar_url} className="issue-user-avatar" /> {issue.user.login}
+      by <img src={appendQuery(issue.user.avatar_url, 's=40')} className="issue-user-avatar" /> {issue.user.login}
     </div>
   );
 };
