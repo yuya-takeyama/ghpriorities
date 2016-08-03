@@ -13,9 +13,7 @@ class DashboardsController < ApplicationController
   def show
     priorities = begin JSON.parse(@dashboard.priorities_json) rescue {} end
     issues = octokit.search_issues(@dashboard.query, page: 1, per_page: 100).items.map(&:to_attrs)
-    result = GHPriorities::IssuesSorter.group_and_sort(priorities: priorities, issues: issues)
-    @prioritized_issues = result[:prioritized]
-    @unprioritized_issues = result[:unprioritized]
+    @issues = GHPriorities::IssuesSorter.sort(priorities: priorities, issues: issues)
   end
 
   # GET /dashboards/new
