@@ -2,7 +2,7 @@ require 'octokit'
 require 'ghpriorities/issues_sorter'
 
 class DashboardsController < ApplicationController
-  before_action :set_dashboard, only: [:show, :edit, :update, :destroy]
+  before_action :set_dashboard, only: [:show, :edit, :update, :update_priorities, :destroy]
 
   # GET /dashboards
   def index
@@ -45,6 +45,15 @@ class DashboardsController < ApplicationController
     end
   end
 
+  # PUT /dashboards/1/priorities
+  def update_priorities
+    if @dashboard.update(update_priorities_params)
+      head :no_content
+    else
+      head :bad_request
+    end
+  end
+
   # DELETE /dashboards/1
   def destroy
     @dashboard.destroy
@@ -60,6 +69,11 @@ class DashboardsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def dashboard_params
       params.require(:dashboard).permit(:query, :priorities_json)
+    end
+
+    def update_priorities_params
+      priorities = params.require(:dashboard).to_unsafe_h[:priorities]
+      {priorities_json: priorities.to_json}
     end
 
     def octokit

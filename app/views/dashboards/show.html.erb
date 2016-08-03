@@ -12,7 +12,7 @@
 
 <h2>Priority</h2>
 
-<%= react_component('Issues', issues: @issues) %>
+<%= react_component('Issues', issues: @issues, dashboardId: @dashboard.id) %>
 
 <%= link_to 'Edit', edit_dashboard_path(@dashboard) %> |
 <%= link_to 'Back', dashboards_path %>

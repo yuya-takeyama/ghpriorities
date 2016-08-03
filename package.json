@@ -4,6 +4,7 @@
     "node": ">= 0.10"
   },
   "dependencies": {
+    "axios": "^0.13.1",
     "babel-preset-stage-2": "^6.5.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
