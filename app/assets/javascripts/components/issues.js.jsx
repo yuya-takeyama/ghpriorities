@@ -86,6 +86,7 @@ export default class Issues extends Component {
           issues={this.state.issues}
           issueState={this.state.issueState}
           onSortEnd={this.onSortEnd.bind(this)}
+          pressDelay={150}
         />
       </div>
     );
